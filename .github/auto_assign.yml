@@ -1,0 +1,15 @@
+addReviewers: true
+
+addAssignees: true
+
+numberOfReviewers: 2
+reviewers:
+  - DMCHMB
+  - safa-min
+  - sursindmitry
+  - IliaWizy
+
+numberOfAssignees: 0
+assignees:
+  - IliaWizy
+  - IlyaLisov

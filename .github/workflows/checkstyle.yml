@@ -1,0 +1,21 @@
+name: "Google Check Style"
+
+on: [ pull_request ]
+
+jobs:
+  checkstyle_job:
+    runs-on: ubuntu-latest
+    name: Checkstyle job
+
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Run check style
+        uses: nikitasavinov/checkstyle-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          checkstyle_config: /google_checks.xml
+          checkstyle_version: 10.12.5
+          fail_on_error: true
