@@ -16,6 +16,6 @@ jobs:
         uses: nikitasavinov/checkstyle-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          checkstyle_config: /google_checks.xml
+          checkstyle_config: google_checks.xml
           checkstyle_version: 10.12.5
           fail_on_error: true
