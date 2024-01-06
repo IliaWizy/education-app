@@ -17,11 +17,15 @@ repositories {
     maven { url = uri("https://repo.spring.io/snapshot") }
 }
 
+val springBootVersion = "3.2.1"
+val postgresqlVersion = "42.7.1"
+
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation("org.springframework.boot:spring-boot-starter-web")
-    runtimeOnly("org.postgresql:postgresql")
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion")
+    implementation("org.springframework.boot:spring-boot-starter-web:$springBootVersion")
+    implementation("org.postgresql:postgresql:$postgresqlVersion")
+
+    testImplementation("org.springframework.boot:spring-boot-starter-test:$springBootVersion")
 }
 
 tasks {
