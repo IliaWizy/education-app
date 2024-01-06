@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class DemoController {
-    @RequestMapping("/demo")
-    public String demo() {
-        return "App is running";
-    }
+  @RequestMapping("/demo")
+  public String demo() {
+    return "App is running";
+  }
 }
