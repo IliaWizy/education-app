@@ -1,11 +1,11 @@
 plugins {
     kotlin("jvm") version "1.9.20"
-    id("org.springframework.boot") version "3.2.2-SNAPSHOT"
+    id("org.springframework.boot") version "3.2.1"
     id("io.spring.dependency-management") version "1.1.4"
     checkstyle
 }
 
-group = "com.example"
+group = "com.wizy"
 version = "0.0.1-SNAPSHOT"
 
 java {

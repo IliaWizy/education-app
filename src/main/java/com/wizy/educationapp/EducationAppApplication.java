@@ -1,4 +1,4 @@
-package com.example.educationapp;
+package com.wizy.educationapp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

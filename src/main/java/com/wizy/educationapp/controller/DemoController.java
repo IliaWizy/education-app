@@ -1,4 +1,4 @@
-package com.example.educationapp.controller;
+package com.wizy.educationapp.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
