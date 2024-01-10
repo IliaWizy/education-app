@@ -1,6 +1,13 @@
 spring:
-  application:
-    name: education-app
-
+  datasource:
+    url: jdbc:postgresql://localhost:5432/education_db
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: none
+  liquibase:
+    change-log: classpath:liquibase/db.changelog-master.yml
+    enabled: true
 server:
   port: 8080
