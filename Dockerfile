@@ -1,9 +1,17 @@
-ARG DEFAULT_APP_NAME=educational-app
+FROM gradle:8.0-jdk17-alpine AS builder
+WORKDIR /
+
+COPY config /config
+COPY gradle /gradle
+COPY build.gradle.kts /
+COPY settings.gradle.kts /
+COPY /src /src
+
+RUN gradle clean build --no-daemon --stacktrace
 
 FROM openjdk:17-alpine
-ARG DEFAULT_APP_NAME
-
-COPY build/libs/$DEFAULT_APP_NAME.jar app.jar
+WORKDIR /
+COPY --from=builder /build/libs/educational-app.jar app.jar
 
 EXPOSE 8080
 
