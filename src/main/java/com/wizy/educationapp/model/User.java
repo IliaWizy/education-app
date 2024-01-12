@@ -14,5 +14,7 @@ public class User {
   private String email;
   private String fullName;
   private String password;
+
+  @Column(columnDefinition = "BOOLEAN DEFAULT false")
   private boolean isTutor;
 }

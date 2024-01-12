@@ -15,17 +15,19 @@ public class UserController {
   private final UserService userService;
 
   @PostMapping("/register")
-  public User registerUser(@RequestBody RegistrationRequest registrationRequest) {
-    return userService.registerUser(
-            registrationRequest.getEmail(),
-            registrationRequest.getFullName(),
-            registrationRequest.getPassword(),
-            registrationRequest.isTutor()
-    );
-  }
+  public ResponseEntity<String> registerUser(@RequestBody RegistrationRequest registrationRequest) {
+    try {
+      User user = userService.registerUser(
+              registrationRequest.getEmail(),
+              registrationRequest.getFullName(),
+              registrationRequest.getPassword()
+      );
 
-  @ExceptionHandler(UserAlreadyExistsException.class)
-  public ResponseEntity<String> handleUserAlreadyExistsException(UserAlreadyExistsException e) {
-    return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+      return ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully");
+    } catch (IllegalArgumentException e) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    } catch (UserAlreadyExistsException e) {
+      return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+    }
   }
 }
