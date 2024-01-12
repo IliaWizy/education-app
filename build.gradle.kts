@@ -25,8 +25,14 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion")
     implementation("org.postgresql:postgresql:$postgresqlVersion")
     implementation("org.liquibase:liquibase-core:$liquibaseVersion")
-
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     testImplementation("org.springframework.boot:spring-boot-starter-test:$springBootVersion")
+
+    compileOnly ("org.projectlombok:lombok:1.18.30")
+    annotationProcessor ("org.projectlombok:lombok:1.18.30")
+
+    testCompileOnly ("org.projectlombok:lombok:1.18.30")
+    testAnnotationProcessor ("org.projectlombok:lombok:1.18.30")
 }
 
 tasks {
