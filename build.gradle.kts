@@ -21,7 +21,6 @@ val postgresqlVersion = "42.7.1"
 val liquibaseVersion = "4.25.1"
 
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion")
     implementation("org.springframework.boot:spring-boot-starter-web:$springBootVersion")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion")
     implementation("org.postgresql:postgresql:$postgresqlVersion")
