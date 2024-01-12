@@ -1,0 +1,15 @@
+POST http://localhost:8080/api/users/register
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "fullName": "Test User",
+  "password": "testPassword"
+}
+
+> {%
+client.test("Duplicate registration prevented", function() {
+  client.assert(response.status === 409, "Response status is not 409");
+  client.assert(response.body === "User with this email already exists", "Response message does not match expected text");
+});
+%}

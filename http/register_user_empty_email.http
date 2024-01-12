@@ -1,0 +1,16 @@
+POST http://localhost:8080/api/users/register
+Content-Type: application/json
+
+{
+  "email": "",
+  "fullName": "Empty User",
+  "password": "Password"
+}
+
+
+> {%
+client.test("Empty fields prevented registration", function() {
+  client.assert(response.status === 400, "Response status is not 400");
+  client.assert(response.body === "Email and password are required for registration", "Response message does not match expected text");
+});
+%}
