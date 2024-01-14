@@ -19,6 +19,8 @@ repositories {
 val springBootVersion = "3.2.1"
 val postgresqlVersion = "42.7.1"
 val liquibaseVersion = "4.25.1"
+val lombokVersion = "1.18.30"
+val mapstructVersion = "1.5.5.Final"
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web:$springBootVersion")
@@ -28,11 +30,17 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     testImplementation("org.springframework.boot:spring-boot-starter-test:$springBootVersion")
 
-    compileOnly ("org.projectlombok:lombok:1.18.30")
-    annotationProcessor ("org.projectlombok:lombok:1.18.30")
+    compileOnly ("org.projectlombok:lombok:$lombokVersion")
+    annotationProcessor ("org.projectlombok:lombok:$lombokVersion")
+    testCompileOnly ("org.projectlombok:lombok:$lombokVersion")
+    testAnnotationProcessor ("org.projectlombok:lombok:$lombokVersion")
 
-    testCompileOnly ("org.projectlombok:lombok:1.18.30")
-    testAnnotationProcessor ("org.projectlombok:lombok:1.18.30")
+    implementation("jakarta.validation:jakarta.validation-api:3.0.2")
+
+    implementation("org.mapstruct:mapstruct:$mapstructVersion")
+    annotationProcessor("org.mapstruct:mapstruct-processor:$mapstructVersion")
+
+    implementation("org.hibernate.validator:hibernate-validator:8.0.1.Final")
 }
 
 tasks {
