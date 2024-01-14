@@ -8,4 +8,6 @@ public interface UserService {
   User getByEmail(String email);
 
   void create(User user);
+
+  User save(User user);
 }

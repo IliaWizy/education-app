@@ -17,4 +17,6 @@ public class User {
 
   @Column(columnDefinition = "BOOLEAN DEFAULT false")
   private boolean isTutor;
+  @Column(columnDefinition = "BOOLEAN DEFAULT false")
+  private boolean isActive;
 }
