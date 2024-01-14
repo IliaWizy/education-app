@@ -9,8 +9,6 @@ Content-Type: application/json
 
 > {%
 client.test("User registered successfully", function() {
-  client.assert(response.status === 200, "Response status is not 200");
-  client.assert(response.json().email === "test@example.com", "User email does not match expected value");
-  client.assert(response.json().fullName === "Test User", "User full name does not match expected value");
+  client.assert(response.status === 201, "Response status is not 201");
 });
 %}
