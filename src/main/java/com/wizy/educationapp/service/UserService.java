@@ -1,5 +1,6 @@
 package com.wizy.educationapp.service;
 
+import com.wizy.educationapp.dto.UserDto;
 import com.wizy.educationapp.model.User;
 
 public interface UserService {
@@ -7,7 +8,9 @@ public interface UserService {
 
   User getByEmail(String email);
 
-  void create(User user);
+  UserDto create(UserDto userDto);
 
   User save(User user);
+
+  Boolean activateUser(String token);
 }

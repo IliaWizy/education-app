@@ -8,10 +8,13 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface UserMapper {
 
+  @Mapping(target = "email", source = "email")
+  @Mapping(target = "fullName", source = "fullName")
+  @Mapping(target = "password", source = "password")
   UserDto toDto(User user);
 
-  @Mapping(target = "id", ignore = true)
-  @Mapping(target = "tutor", ignore = true)
-  @Mapping(target = "active", ignore = true)
+  @Mapping(target = "email", source = "email")
+  @Mapping(target = "fullName", source = "fullName")
+  @Mapping(target = "password", source = "password")
   User toEntity(UserDto dto);
 }

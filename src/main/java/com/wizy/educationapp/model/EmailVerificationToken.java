@@ -8,8 +8,8 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "verification_tokens")
-public class VerificationToken {
+@Table(name = "email_verification_tokens")
+public class EmailVerificationToken {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +29,7 @@ public class VerificationToken {
   @JoinColumn(name = "user_id", referencedColumnName = "id")
   private User user;
 
-  public VerificationToken(String token, User user) {
+  public EmailVerificationToken(String token, User user) {
     this.token = token;
     this.user = user;
   }

@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class GlobalExceptionHandler {
 
   @ExceptionHandler(ResourceAlreadyExistsException.class)
-  public ResponseEntity<ErrorResponse> resourceAlreadyExistsException(Exception ex) {
+  public ResponseEntity<ErrorResponse>
+      resourceAlreadyExistsException(ResourceAlreadyExistsException ex) {
+
     HttpStatus status = HttpStatus.CONFLICT;
     ErrorResponse errorResponse = new ErrorResponse(status.name(), ex.getMessage());
     return ResponseEntity.status(status).body(errorResponse);

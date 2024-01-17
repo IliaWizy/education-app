@@ -10,11 +10,11 @@ CREATE TABLE users
     is_active  BOOLEAN
 );
 
-CREATE TABLE verification_tokens
+CREATE TABLE email_verification_tokens
 (
     id          SERIAL PRIMARY KEY,
     user_id     INT,
     token       VARCHAR(255),
     expiry_date TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users (id)
+    FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );
