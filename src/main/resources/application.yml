@@ -1,6 +1,22 @@
 spring:
   config:
     import: optional:file:.env[.properties]
+  thymeleaf:
+    enabled: true
+    mode: HTML
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+  application:
+    base-url: http://localhost:8080/v1
   datasource:
     url: jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
     username: ${POSTGRES_USERNAME}

@@ -1,16 +1,18 @@
-package com.wizy.educationapp.controller;
+package com.wizy.educationapp.web.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class DemoController {
+@RequestMapping("/v1/user")
+public class UserController {
 
-  @RequestMapping("/demo")
-  public ResponseEntity<String> demo() {
-    String message = "App is running";
+  @GetMapping("/hello")
+  public ResponseEntity<String> hello() {
+    String message = "Hello USER";
     return new ResponseEntity<>(message, HttpStatus.OK);
   }
 }
