@@ -8,6 +8,7 @@ import com.wizy.educationapp.repository.EmailVerificationTokenRepository;
 import com.wizy.educationapp.repository.UserRepository;
 import com.wizy.educationapp.service.EmailService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,10 @@ public class EmailServiceImpl implements EmailService {
   private final UserRepository userRepository;
   private final JavaMailSender javaMailSender;
 
+  @Value("${spring.application.base-url}")
+  private String baseUrl;
+
+  @Override
   public User sendMail(UserDto userDto) {
     User user = userRepository.findByEmail(userDto.email())
             .orElseThrow(ResourceNotFoundException::new);
@@ -33,7 +38,7 @@ public class EmailServiceImpl implements EmailService {
     message.setFrom("education-app");
     message.setTo(user.getEmail());
     message.setSubject("email confirmation");
-    message.setText("http://localhost:8080/api/v1/activation?token=" + token);
+    message.setText(baseUrl + "/activation?token=" + token);
     javaMailSender.send(message);
     return user;
   }

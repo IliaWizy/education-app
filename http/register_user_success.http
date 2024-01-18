@@ -1,4 +1,4 @@
-POST http://localhost:8080/api/v1/auth/sign-up
+POST http://localhost:8080/v1/auth/sign-up
 Content-Type: application/json
 
 {
@@ -10,5 +10,7 @@ Content-Type: application/json
 > {%
 client.test("User registered successfully", function() {
   client.assert(response.status === 201, "Response status is not 201");
+  client.assert(response.body.email === "test@example.com", "Response message does not match expected text");
+  client.assert(response.body.fullName === "Test User", "Response message does not match expected text");
 });
 %}

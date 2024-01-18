@@ -7,12 +7,12 @@ import com.wizy.educationapp.model.User;
 import com.wizy.educationapp.repository.EmailVerificationTokenRepository;
 import com.wizy.educationapp.repository.UserRepository;
 import com.wizy.educationapp.service.EmailVerificationTokenService;
-import jakarta.transaction.Transactional;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -21,18 +21,21 @@ public class EmailVerificationTokenServiceImpl implements EmailVerificationToken
   private final EmailVerificationTokenRepository emailVerificationTokenRepository;
   private final UserRepository userRepository;
 
+  @Override
   @Transactional
   public EmailVerificationToken findByToken(String token) {
     return emailVerificationTokenRepository.findByToken(token)
             .orElseThrow(ResourceNotFoundException::new);
   }
 
+  @Override
   @Transactional
   public EmailVerificationToken findByUser(User user) {
     return emailVerificationTokenRepository.findByUser(user)
             .orElseThrow(ResourceNotFoundException::new);
   }
 
+  @Override
   @Transactional
   public EmailVerificationToken save(UserDto dto) {
     User user = userRepository.findByEmail(dto.email())

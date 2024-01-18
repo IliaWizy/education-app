@@ -1,31 +1,39 @@
 package com.wizy.educationapp.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import java.sql.Timestamp;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Entity
-@Data
+@Getter
+@Setter
+@EqualsAndHashCode(of = "id")
+@ToString
 @NoArgsConstructor
 @Table(name = "email_verification_tokens")
 public class EmailVerificationToken {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private int id;
+  private Long id;
 
   private String token;
 
   @Column(name = "expiry_date")
   private Timestamp expiryDate;
 
-  @OneToOne(cascade = {
-    CascadeType.DETACH,
-    CascadeType.MERGE,
-    CascadeType.PERSIST,
-    CascadeType.REFRESH
-  })
+  @OneToOne
   @JoinColumn(name = "user_id", referencedColumnName = "id")
   private User user;
 

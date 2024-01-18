@@ -8,7 +8,7 @@ spring:
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
     show-sql: true
     properties:
       hibernate:
@@ -29,5 +29,13 @@ spring:
           auth: true
           starttls:
             enable: true
+  application:
+    base-url: http://localhost:8080/v1
 server:
   port: 8080
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
+    org.springframework.security: TRACE
+#        org.springframework.boot.autoconfigure: DEBUG

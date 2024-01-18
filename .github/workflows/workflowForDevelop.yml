@@ -3,7 +3,7 @@ name: Develop branch workflow
 on:
   push:
     branches:
-      - feature/*
+      - dev
 
 env:
   REGISTRY: ghcr.io

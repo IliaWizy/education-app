@@ -20,18 +20,23 @@ public class UserServiceImpl implements UserService {
   private final EmailVerificationTokenRepository emailVerificationTokenRepository;
 
   @Override
+  @Transactional
   public User getById(Long id) {
     return userRepository.findById(id)
             .orElseThrow(ResourceNotFoundException::new);
   }
 
+
   @Override
+  @Transactional
   public User getByEmail(String email) {
     return userRepository.findByEmail(email)
             .orElseThrow(ResourceNotFoundException::new);
   }
 
+
   @Override
+  @Transactional
   public UserDto create(UserDto userDto) {
     User user = userMapper.toEntity(userDto);
     if (emailExists(user.getEmail())) {
@@ -42,12 +47,14 @@ public class UserServiceImpl implements UserService {
     return userMapper.toDto(user);
   }
 
+  @Override
   @Transactional
   public User save(User user) {
     return userRepository.save(user);
   }
 
   @Override
+  @Transactional
   public Boolean activateUser(String token) {
 
     User user = emailVerificationTokenRepository
