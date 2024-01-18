@@ -29,10 +29,6 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-validation:$springBootVersion")
     implementation("org.springframework.boot:spring-boot-starter-mail:$springBootVersion")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf:$springBootVersion")
-//    implementation("org.springframework.boot:spring-boot-starter-security:$springBootVersion")
-    implementation("io.jsonwebtoken:jjwt-api:$jjwtVersion")
-    runtimeOnly("io.jsonwebtoken:jjwt-impl:$jjwtVersion")
-    runtimeOnly("io.jsonwebtoken:jjwt-jackson:$jjwtVersion")
 
     implementation("org.postgresql:postgresql:$postgresqlVersion")
     implementation("org.liquibase:liquibase-core:$liquibaseVersion")

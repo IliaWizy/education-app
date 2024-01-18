@@ -9,10 +9,12 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class VerificationServiceImpl implements VerificationService {
 
   private final EmailVerificationTokenRepository emailVerificationTokenRepository;
@@ -33,7 +35,8 @@ public class VerificationServiceImpl implements VerificationService {
 
       return savedUser;
     } else {
-      throw new RuntimeException("Время истечения токена истекло");
+      log.error("Token expiration time has expired {}", token);
+      throw new RuntimeException("Token expiration time has expired");
     }
   }
 }
