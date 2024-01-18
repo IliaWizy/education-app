@@ -1,0 +1,80 @@
+### Test 1: check application run
+GET http://localhost:8080/demo
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+  client.assert(response.body === "App is running", "Response body does not match expected text");
+});
+%}
+
+### Test 2: prevent empty email
+POST http://localhost:8080/v1/auth/sign-up
+Content-Type: application/json
+
+{
+  "email": "",
+  "fullName": "Empty User",
+  "password": "Password"
+}
+
+> {%
+client.test("Empty fields prevented registration", function() {
+  client.assert(response.status === 400, "Response status is not 400");
+  client.assert(response.body.email === "Email must not be empty", "Response message does not match expected text");
+});
+%}
+
+### Test 3: prevent empty password
+POST http://localhost:8080/v1/auth/sign-up
+Content-Type: application/json
+
+{
+  "email": "test2@example.com",
+  "fullName": "Empty User",
+  "password": ""
+}
+
+
+> {%
+client.test("Empty fields prevented registration", function() {
+  client.assert(response.status === 400, "Response status is not 400");
+  client.assert(response.body.password === "Password must not be empty", "Response message does not match expected text");
+});
+%}
+
+### Test 4: successfully register user
+POST http://localhost:8080/v1/auth/sign-up
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "fullName": "Test User",
+  "password": "testPassword"
+}
+
+> {%
+client.test("User registered successfully", function() {
+  client.assert(response.status === 201, "Response status is not 201");
+  client.assert(response.body.email === "test@example.com", "Response message does not match expected text");
+  client.assert(response.body.fullName === "Test User", "Response message does not match expected text");
+});
+%}
+
+### Test 5: prevent user's duplicate registration
+POST http://localhost:8080/v1/auth/sign-up
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "fullName": "Test User",
+  "password": "testPassword"
+}
+
+> {%
+client.test("Duplicate registration prevented", function() {
+  client.assert(response.status === 409, "Response status is not 409");
+  client.assert(response.body.status === "CONFLICT", "Response status does not match expected value");
+  client.assert(response.body.message === "User with this email already exists", "Response message does not match expected text");
+});
+%}
