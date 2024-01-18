@@ -5,6 +5,8 @@ import com.wizy.educationapp.database.entity.User;
 import com.wizy.educationapp.database.repository.EmailVerificationTokenRepository;
 import com.wizy.educationapp.database.repository.UserRepository;
 import com.wizy.educationapp.service.VerificationService;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,11 +24,16 @@ public class VerificationServiceImpl implements VerificationService {
         emailVerificationTokenRepository.findByToken(token);
 
     EmailVerificationToken verificationToken = emailVerificationToken.get();
-    User savedUser = verificationToken.getUser();
-    savedUser.setActive(true);
 
-    userRepository.save(savedUser);
+    if (verificationToken.getExpirationTime().after(Timestamp.valueOf(LocalDateTime.now()))) {
+      User savedUser = verificationToken.getUser();
+      savedUser.setActive(true);
 
-    return savedUser;
+      userRepository.save(savedUser);
+
+      return savedUser;
+    } else {
+      throw new RuntimeException("Время истечения токена истекло");
+    }
   }
 }
