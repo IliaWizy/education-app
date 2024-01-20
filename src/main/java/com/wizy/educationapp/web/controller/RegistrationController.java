@@ -1,6 +1,7 @@
 package com.wizy.educationapp.web.controller;
 
 import com.wizy.educationapp.service.RegistrationFacade;
+import com.wizy.educationapp.service.VerificationService;
 import com.wizy.educationapp.web.dto.ActivationResponse;
 import com.wizy.educationapp.web.dto.SignUpRequestDto;
 import com.wizy.educationapp.web.dto.SignUpResponseDto;
@@ -20,16 +21,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class RegistrationController {
 
   private final RegistrationFacade registrationFacade;
+  private final VerificationService verificationService;
 
   @PostMapping("/register")
-  public SignUpResponseDto register(@Valid @RequestBody SignUpRequestDto requestDto)
-      throws MessagingException {
+  public SignUpResponseDto register(@Valid @RequestBody SignUpRequestDto requestDto) {
     return registrationFacade.registeredUserAndSendEmail(requestDto);
   }
 
   @GetMapping("/activation")
   public ActivationResponse activation(@RequestParam String token) {
-    return registrationFacade.verification(token);
+    return verificationService.verification(token);
   }
 
 }

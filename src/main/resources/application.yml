@@ -17,6 +17,9 @@ spring:
             enable: true
   application:
     base-url: http://localhost:8080/v1
+    expiration:
+      token:
+        verification-email: ${HOUR_EXPIRATION_TOKEN_EMAIL}
   datasource:
     url: jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
     username: ${POSTGRES_USERNAME}

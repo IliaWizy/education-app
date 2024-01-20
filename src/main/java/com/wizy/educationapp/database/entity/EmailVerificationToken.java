@@ -9,13 +9,14 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.sql.Timestamp;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
 @AllArgsConstructor
 @Getter
 @Setter
@@ -25,15 +26,16 @@ import lombok.Setter;
 public class EmailVerificationToken {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  private final Long id;
 
   @Column(name = "token")
-  private String token;
+  private final String token;
 
   @ManyToOne
   @JoinColumn(name = "user_id", nullable = false)
-  private User user;
+  private final User user;
 
   @Column(name = "expiration_time")
-  private Timestamp expirationTime;
+  private final Timestamp expirationTime;
+
 }

@@ -14,7 +14,6 @@ public interface SignUpMapper {
   @Mapping(source = "password", target = "password")
 
   @Mapping(target = "id", ignore = true)
-  @Mapping(target = "roles", ignore = true)
   @Mapping(target = "active", ignore = true)
   User toEntity(SignUpRequestDto dto);
 

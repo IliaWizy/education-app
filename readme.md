@@ -5,11 +5,15 @@ To start an application you need to pass variables to `.env` file.
 #### Example:
 
 ```agsl
+# PostgreSQL
 POSTGRES_HOST=localhost
 POSTGRES_PORT=5432
 POSTGRES_DB=education_db
 POSTGRES_USERNAME=postgres
 POSTGRES_PASSWORD=postgres
+
+# Email
 MAIL_USERNAME= YOUR EMAIL
-MAIL_PASSWORD= YOUR APPLICATION EMAIL PASSWORD
+MAIL_PASSWORD= YOUR GOOGLE APPLICATION PASSWORD
+HOUR_EXPIRATION_TOKEN_EMAIL=24
 ```

@@ -1,10 +1,12 @@
 package com.wizy.educationapp.service.impl;
 
 import com.wizy.educationapp.service.EmailService;
+import com.wizy.educationapp.service.exception.MessagingLogicException;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
@@ -20,9 +22,17 @@ public class EmailServiceImpl implements EmailService {
 
   private final TemplateEngine templateEngine;
 
+  @Value("${spring.application.base-url}")
+  private String baseUrl;
+
   @Async
   @Override
-  public void sendConfirmationEmail(String email, Context context) throws MessagingException {
+  public void sendConfirmationEmail(String email, String firstName, String token) {
+    Context context = new Context();
+    context.setVariable("firstName", firstName);
+    context.setVariable("verificationURL",
+        baseUrl + "/auth/activation?token=" + token);
+
     try {
       MimeMessage message = emailSender.createMimeMessage();
       MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
@@ -34,9 +44,8 @@ public class EmailServiceImpl implements EmailService {
       helper.setText(htmlContent, true);
 
       emailSender.send(message);
-    } catch (MessagingException e) {
-      log.error("Error sending confirmation email to: {}", email);
-      throw new MessagingException();
+    } catch (MessagingException ex) {
+      throw new MessagingLogicException("Error while sending confirmation email");
     }
   }
 }
