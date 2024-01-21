@@ -2,9 +2,9 @@ package com.wizy.educationapp.web.controller;
 
 import com.wizy.educationapp.service.RegistrationFacade;
 import com.wizy.educationapp.service.VerificationService;
-import com.wizy.educationapp.web.dto.VerificationResponse;
 import com.wizy.educationapp.web.dto.SignUpRequestDto;
 import com.wizy.educationapp.web.dto.SignUpResponseDto;
+import com.wizy.educationapp.web.dto.VerificationResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
