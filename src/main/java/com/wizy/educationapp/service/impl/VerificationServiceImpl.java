@@ -7,7 +7,7 @@ import com.wizy.educationapp.database.repository.UserRepository;
 import com.wizy.educationapp.service.VerificationService;
 import com.wizy.educationapp.service.exception.EmailTokenNotFoundException;
 import com.wizy.educationapp.service.exception.TokenExpirationTimeException;
-import com.wizy.educationapp.web.dto.ActivationResponse;
+import com.wizy.educationapp.web.dto.VerificationResponse;
 import com.wizy.educationapp.web.mapper.VerificationMapper;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -26,7 +26,7 @@ public class VerificationServiceImpl implements VerificationService {
   private final VerificationMapper verificationMapper;
 
   @Override
-  public ActivationResponse verification(String token) {
+  public VerificationResponse verification(String token) {
     EmailVerificationToken verificationToken =
         emailVerificationTokenRepository.findByToken(token).orElseThrow(
             () -> new EmailTokenNotFoundException("Token not found"));

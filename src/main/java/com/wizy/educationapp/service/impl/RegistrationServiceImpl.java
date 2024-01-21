@@ -20,12 +20,12 @@ public class RegistrationServiceImpl implements RegistrationService {
 
   @Override
   public User register(SignUpRequestDto requestDto) {
-    User savedUser = signUpMapper.toEntity(requestDto);
-
-    userRepository.findByEmail(savedUser.getEmail()).ifPresent(existingUser -> {
+    userRepository.findByEmail(requestDto.email()).ifPresent(existingUser -> {
       throw new UserIsExistingException(
           "User already exists.", existingUser.getEmail());
     });
+
+    User savedUser = signUpMapper.toEntity(requestDto);
 
     savedUser.setActive(false);
     userRepository.save(savedUser);

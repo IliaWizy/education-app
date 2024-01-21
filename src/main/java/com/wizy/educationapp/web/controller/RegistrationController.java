@@ -2,10 +2,9 @@ package com.wizy.educationapp.web.controller;
 
 import com.wizy.educationapp.service.RegistrationFacade;
 import com.wizy.educationapp.service.VerificationService;
-import com.wizy.educationapp.web.dto.ActivationResponse;
+import com.wizy.educationapp.web.dto.VerificationResponse;
 import com.wizy.educationapp.web.dto.SignUpRequestDto;
 import com.wizy.educationapp.web.dto.SignUpResponseDto;
-import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("v1/auth")
+@RequestMapping("/v1/auth")
 public class RegistrationController {
 
   private final RegistrationFacade registrationFacade;
@@ -28,8 +27,8 @@ public class RegistrationController {
     return registrationFacade.registeredUserAndSendEmail(requestDto);
   }
 
-  @GetMapping("/activation")
-  public ActivationResponse activation(@RequestParam String token) {
+  @GetMapping("/verification")
+  public VerificationResponse verification(@RequestParam String token) {
     return verificationService.verification(token);
   }
 

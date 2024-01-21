@@ -5,9 +5,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.LinkedHashSet;
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,18 +28,20 @@ public class User {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  @EqualsAndHashCode.Include
   @Column(name = "email")
   private String email;
 
-  @Column(name = "firstname")
-  private String firstname;
-
-  @Column(name = "lastname")
-  private String lastname;
+  @Column(name = "name")
+  private String name;
 
   @Column(name = "password")
   private String password;
 
   @Column(name = "active")
   private boolean active;
+
+  @OneToMany(mappedBy = "user", orphanRemoval = true)
+  private Set<EmailVerificationToken> emailVerificationTokens = new LinkedHashSet<>();
+
 }

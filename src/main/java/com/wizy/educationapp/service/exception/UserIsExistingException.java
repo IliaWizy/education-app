@@ -3,12 +3,12 @@ package com.wizy.educationapp.service.exception;
 import lombok.Getter;
 
 @Getter
-public class UserIsExistingException extends BusinessLogicException {
-  private String email;
+public class UserIsExistingException extends RuntimeException {
+  private String name;
 
-  public UserIsExistingException(String message, String email) {
+  public UserIsExistingException(String message, String name) {
     super(message);
-    this.email = email;
+    this.name = name;
   }
 
 }

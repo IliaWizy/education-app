@@ -26,19 +26,9 @@ public class RegistrationFacadeImpl implements RegistrationFacade {
   public SignUpResponseDto registeredUserAndSendEmail(SignUpRequestDto signUpRequestDto) {
     User savedUser = registrationService.register(signUpRequestDto);
     EmailVerificationToken emailVerificationToken = emailVerificationTokenService.save(savedUser);
-    sendConfirmationEmail(signUpRequestDto, emailVerificationToken);
-
-    return createResponseDto(savedUser);
-  }
-
-  private void sendConfirmationEmail(SignUpRequestDto signUpRequestDto,
-                                     EmailVerificationToken emailVerificationToken) {
-
-    emailService.sendConfirmationEmail(signUpRequestDto.email(), signUpRequestDto.firstName(),
+    emailService.sendConfirmationEmail(savedUser.getEmail(), savedUser.getName(),
         emailVerificationToken.getToken());
-  }
 
-  private SignUpResponseDto createResponseDto(User savedUser) {
     return signUpMapper.toDto(savedUser, "Аккаунт создан. Подтвердите почту.");
   }
 }

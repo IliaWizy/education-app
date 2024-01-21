@@ -9,8 +9,7 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface SignUpMapper {
   @Mapping(source = "email", target = "email")
-  @Mapping(source = "firstName", target = "firstname")
-  @Mapping(source = "lastName", target = "lastname")
+  @Mapping(source = "name", target = "name")
   @Mapping(source = "password", target = "password")
 
   @Mapping(target = "id", ignore = true)
@@ -18,8 +17,7 @@ public interface SignUpMapper {
   User toEntity(SignUpRequestDto dto);
 
   @Mapping(source = "entity.email", target = "email")
-  @Mapping(source = "entity.firstname", target = "firstName")
-  @Mapping(source = "entity.lastname", target = "lastName")
+  @Mapping(source = "entity.name", target = "name")
   @Mapping(source = "message", target = "message")
   SignUpResponseDto toDto(User entity, String message);
 }

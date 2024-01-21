@@ -10,10 +10,7 @@ public record SignUpRequestDto(
     String email,
 
     @NotBlank(message = "firstname must NOT be null or empty")
-    String firstName,
-
-    @NotBlank(message = "lastname must NOT be null or empty")
-    String lastName,
+    String name,
 
     @NotBlank(message = "password must NOT be null or empty")
     @Size(min = 6, max = 20, message = "password length must be between 6 and 20 characters")
