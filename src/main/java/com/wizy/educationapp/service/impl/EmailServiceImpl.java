@@ -31,7 +31,7 @@ public class EmailServiceImpl implements EmailService {
     Context context = new Context();
     context.setVariable("firstName", firstName);
     context.setVariable("verificationURL",
-        baseUrl + "/auth/activation?token=" + token);
+        baseUrl + "/auth/verification?token=" + token);
 
     try {
       MimeMessage message = emailSender.createMimeMessage();

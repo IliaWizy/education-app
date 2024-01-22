@@ -9,7 +9,7 @@ public record SignUpRequestDto(
     @Email(message = "invalid email address")
     String email,
 
-    @NotBlank(message = "firstname must NOT be null or empty")
+    @NotBlank(message = "name must NOT be null or empty")
     String name,
 
     @NotBlank(message = "password must NOT be null or empty")
