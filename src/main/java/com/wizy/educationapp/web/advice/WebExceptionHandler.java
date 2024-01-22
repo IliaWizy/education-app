@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ControllerAdvice(basePackages = "com.wizy.educationapp.web")
+@ControllerAdvice
 @Slf4j
 public class WebExceptionHandler {
 
@@ -25,5 +25,14 @@ public class WebExceptionHandler {
 
     log.error("MethodArgumentNotValidException: {}", errors);
     return ResponseEntity.badRequest().body(errors);
+  }
+
+  @ExceptionHandler(Exception.class)
+  @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+  public ResponseEntity<String> handleException(
+      Exception ex) {
+
+    log.error(ex.getMessage());
+    return ResponseEntity.badRequest().body(ex.getMessage());
   }
 }

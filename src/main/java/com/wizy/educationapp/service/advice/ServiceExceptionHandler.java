@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ControllerAdvice(basePackages = "com.wizy.educationapp.service")
+@ControllerAdvice
 @Slf4j
 public class ServiceExceptionHandler {
 
@@ -37,15 +37,6 @@ public class ServiceExceptionHandler {
   @ResponseStatus(HttpStatus.NOT_FOUND)
   public ResponseEntity<String> handleEmailTokenNotFoundException(
       EmailTokenNotFoundException ex) {
-
-    log.error(ex.getMessage());
-    return ResponseEntity.badRequest().body(ex.getMessage());
-  }
-
-  @ExceptionHandler(Exception.class)
-  @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-  public ResponseEntity<String> handleException(
-      Exception ex) {
 
     log.error(ex.getMessage());
     return ResponseEntity.badRequest().body(ex.getMessage());
