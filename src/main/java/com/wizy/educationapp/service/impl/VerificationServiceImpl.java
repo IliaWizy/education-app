@@ -41,7 +41,7 @@ public class VerificationServiceImpl implements VerificationService {
       emailVerificationTokenRepository.delete(verificationToken);
       return verificationMapper.toDto(savedUser, "Вы подтвердили почту. Войдите в аккаунт");
     } else {
-      emailVerificationTokenRepository.delete(verificationToken);
+      userRepository.delete(verificationToken.getUser());
       throw new TokenExpirationTimeException("Expiration time has expired. Try register again.");
     }
   }
