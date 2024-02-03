@@ -14,6 +14,8 @@ public interface SignUpMapper {
 
   @Mapping(target = "id", ignore = true)
   @Mapping(target = "active", ignore = true)
+  @Mapping(target = "roles", ignore = true)
+  @Mapping(target = "refreshToken", ignore = true)
   User toEntity(SignUpRequestDto dto);
 
   @Mapping(source = "entity.email", target = "email")

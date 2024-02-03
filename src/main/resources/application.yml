@@ -4,6 +4,7 @@ spring:
   thymeleaf:
     enabled: true
     mode: HTML
+
   mail:
     host: smtp.gmail.com
     port: 587
@@ -15,16 +16,22 @@ spring:
           auth: true
           starttls:
             enable: true
+
   application:
     base-url: http://localhost:8080/v1
+    jwt-secret: ${JWT_SECRET}
     expiration:
       token:
         verification-email: ${HOUR_EXPIRATION_TOKEN_EMAIL}
+        jwt-token: ${HOUR_EXPIRATION_TOKEN_JWT}
+        jwt-token-refresh: ${HOUR_EXPIRATION_REFRESH_TOKEN_JWT}
+
   datasource:
     url: jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
     username: ${POSTGRES_USERNAME}
     password: ${POSTGRES_PASSWORD}
     driver-class-name: org.postgresql.Driver
+
   jpa:
     hibernate:
       ddl-auto: validate
@@ -37,5 +44,6 @@ spring:
   liquibase:
     change-log: classpath:liquibase/db.changelog-master.yml
     enabled: true
+
 server:
   port: 8080
