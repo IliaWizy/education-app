@@ -42,6 +42,6 @@ public class User {
   private boolean active;
 
   @OneToMany(mappedBy = "user", orphanRemoval = true)
-  private Set<EmailVerificationToken> emailVerificationTokens = new LinkedHashSet<>();
+  private final Set<EmailVerificationToken> emailVerificationTokens = new LinkedHashSet<>();
 
 }

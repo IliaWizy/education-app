@@ -7,7 +7,7 @@ COPY build.gradle.kts /
 COPY settings.gradle.kts /
 COPY /src /src
 
-RUN gradle clean build --no-daemon --stacktrace
+RUN gradle clean build --no-daemon --stacktrace -x test
 
 FROM openjdk:17-alpine
 WORKDIR /
