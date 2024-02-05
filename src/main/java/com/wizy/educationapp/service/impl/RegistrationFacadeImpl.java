@@ -8,7 +8,7 @@ import com.wizy.educationapp.service.RegistrationFacade;
 import com.wizy.educationapp.service.RegistrationService;
 import com.wizy.educationapp.web.dto.SignUpRequestDto;
 import com.wizy.educationapp.web.dto.SignUpResponseDto;
-import com.wizy.educationapp.web.mapper.SignUpMapper;
+import com.wizy.educationapp.web.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +19,7 @@ public class RegistrationFacadeImpl implements RegistrationFacade {
   private final EmailService emailService;
   private final EmailVerificationTokenService emailVerificationTokenService;
 
-  private final SignUpMapper signUpMapper;
+  private final UserMapper userMapper;
 
 
   @Override
@@ -29,6 +29,6 @@ public class RegistrationFacadeImpl implements RegistrationFacade {
     emailService.sendConfirmationEmail(savedUser.getEmail(), savedUser.getName(),
         emailVerificationToken.getToken());
 
-    return signUpMapper.toDto(savedUser, "Аккаунт создан. Подтвердите почту.");
+    return userMapper.toDto(savedUser, "Аккаунт создан. Подтвердите почту.");
   }
 }

@@ -20,7 +20,6 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 @EnableWebSecurity
 public class SecurityConfig {
 
-  private final UserAuthenticationEntryPoint userAuthenticationEntryPoint;
   private final UserAuthProvider userAuthProvider;
 
   @Bean
@@ -28,10 +27,6 @@ public class SecurityConfig {
     http.cors(AbstractHttpConfigurer::disable);
 
     http.csrf(AbstractHttpConfigurer::disable);
-
-    http.exceptionHandling(ex -> {
-      ex.authenticationEntryPoint(userAuthenticationEntryPoint);
-    });
 
     http.addFilterBefore(new JwtAuthenticationFilter(userAuthProvider),
         BasicAuthenticationFilter.class);

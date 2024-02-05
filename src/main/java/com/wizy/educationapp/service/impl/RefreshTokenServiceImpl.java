@@ -10,6 +10,8 @@ import com.wizy.educationapp.service.exception.TokenExpirationTimeException;
 import com.wizy.educationapp.service.exception.TokenNotFoundException;
 import com.wizy.educationapp.web.dto.JwtResponseDto;
 import java.sql.Timestamp;
+import java.time.Duration;
+import java.util.Date;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,17 +20,17 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class RefreshTokenServiceImpl implements RefreshTokenService {
-  @Value("${spring.application.expiration.token.jwt-token-refresh}")
-  private Long jwtTokenRefresh;
+  @Value("${spring.security.jwt.refresh-token-expiration-time}")
+  private Duration jwtTokenRefresh;
 
   private final UserService userService;
   private final RefreshTokenRepository refreshTokenRepository;
   private final UserAuthProvider userAuthProvider;
 
   @Override
-  public RefreshToken createRefreshToken(String username) {
+  public RefreshToken create(String username) {
 
-    User user = userService.getUserByEmail(username);
+    User user = userService.getByEmail(username);
 
     return createOrUpdateRefreshToken(user);
   }
@@ -37,33 +39,33 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
     RefreshToken refreshToken = user.getRefreshToken();
 
     if (refreshToken == null) {
-      refreshToken = RefreshToken.builder()
-          .refreshToken(generateRefreshTokenValue())
-          .user(user)
-          .build();
+      refreshToken = new RefreshToken(
+          null,
+          generateRefreshTokenValue(),
+          user,
+          new Date(System.currentTimeMillis() + jwtTokenRefresh.toMillis()));
     }
 
-    refreshToken.setExpirationTime(
-        new Timestamp(System.currentTimeMillis() + jwtTokenRefresh * 60 * 60 * 1000));
     user.setRefreshToken(refreshToken);
-    refreshTokenRepository.save(refreshToken);
 
-    return refreshToken;
+
+    return refreshTokenRepository.save(refreshToken);
   }
 
   @Override
-  public JwtResponseDto verifyRefreshToken(String tokenRequest) {
+  public JwtResponseDto verify(String tokenRequest) {
     RefreshToken refreshToken = refreshTokenRepository.findByRefreshToken(tokenRequest)
         .orElseThrow(() -> new TokenNotFoundException("Token does not exist"));
 
     checkTokenExpiration(refreshToken);
 
-    refreshToken.setExpirationTime(
-        new Timestamp(System.currentTimeMillis() + jwtTokenRefresh * 60 * 60 * 1000));
-    refreshToken.setRefreshToken(generateRefreshTokenValue());
+    refreshToken.updateTokenAndExpiration(
+        generateRefreshTokenValue(),
+        new Date(System.currentTimeMillis() + jwtTokenRefresh.toMillis())
+    );
 
     User user = refreshToken.getUser();
-    String token = userAuthProvider.generateToken(user.getEmail(), user.getAuthorities());
+    String token = userAuthProvider.generateToken(user);
 
     refreshTokenRepository.save(refreshToken);
 
@@ -77,7 +79,7 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
     }
   }
 
-  private static String generateRefreshTokenValue() {
+  private String generateRefreshTokenValue() {
     return UUID.randomUUID().toString();
   }
 }

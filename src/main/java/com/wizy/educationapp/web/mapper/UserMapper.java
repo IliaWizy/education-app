@@ -7,7 +7,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
-public interface SignUpMapper {
+public interface UserMapper {
   @Mapping(source = "email", target = "email")
   @Mapping(source = "name", target = "name")
   @Mapping(source = "password", target = "password")
@@ -15,6 +15,7 @@ public interface SignUpMapper {
   @Mapping(target = "id", ignore = true)
   @Mapping(target = "active", ignore = true)
   @Mapping(target = "roles", ignore = true)
+  @Mapping(target = "emailVerificationToken", ignore = true)
   @Mapping(target = "refreshToken", ignore = true)
   User toEntity(SignUpRequestDto dto);
 

@@ -2,7 +2,7 @@
 -- add refresh_token table
 
 -- changeset sursindmitry:4
-CREATE TABLE IF NOT EXISTS refresh_token
+CREATE TABLE IF NOT EXISTS refresh_tokens
 (
     id BIGSERIAL PRIMARY KEY,
     refresh_token VARCHAR(255) UNIQUE,

@@ -1,6 +1,6 @@
 package com.wizy.educationapp.config.security.jwt.service;
 
-import com.wizy.educationapp.database.repository.UserRepository;
+import com.wizy.educationapp.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,13 +12,15 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class CustomUserDetailService implements UserDetailsService {
 
-  private final UserRepository userRepository;
+  private final UserService userService;
 
   @Override
   @Transactional
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
-    return userRepository.findByEmail(username)
-        .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+    try {
+      return userService.getByEmail(username);
+    } catch (com.wizy.educationapp.service.exception.UsernameNotFoundException ex) {
+      throw new UsernameNotFoundException(ex.getMessage(), ex);
+    }
   }
 }

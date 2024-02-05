@@ -8,20 +8,16 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import java.sql.Timestamp;
+import java.util.Date;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@Setter
-@Builder
 @Entity
-@Table(name = "refresh_token")
+@Table(name = "refresh_tokens")
 public class RefreshToken {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,5 +31,10 @@ public class RefreshToken {
   private User user;
 
   @Column(name = "expiration_time")
-  private Timestamp expirationTime;
+  private Date expirationTime;
+
+  public void updateTokenAndExpiration(String token, Date expiration) {
+    this.refreshToken = token;
+    this.expirationTime = expiration;
+  }
 }

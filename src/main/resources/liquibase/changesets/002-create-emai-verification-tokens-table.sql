@@ -1,8 +1,8 @@
 -- liquibase formatted sql
--- add email_verification_token table
+-- add email_verification_tokens table
 
 -- changeset sursindmitry:2
-CREATE TABLE IF NOT EXISTS email_verification_token
+CREATE TABLE IF NOT EXISTS email_verification_tokens
 (
     id              BIGSERIAL PRIMARY KEY,
     token           VARCHAR(255),
@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS email_verification_token
     expiration_time TIMESTAMP
 );
 
--- rollback DROP TABLE email_verification_token;
+-- rollback DROP TABLE email_verification_tokens;
 
 
 

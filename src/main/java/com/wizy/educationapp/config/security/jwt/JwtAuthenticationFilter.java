@@ -1,5 +1,6 @@
 package com.wizy.educationapp.config.security.jwt;
 
+import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -32,7 +33,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
           SecurityContextHolder.getContext().setAuthentication(
               userAuthProvider.validateToken(elements[1])
           );
-        } catch (RuntimeException ex) {
+        } catch (JwtException ex) {
           SecurityContextHolder.clearContext();
           log.error(ex.getMessage());
           throw ex;

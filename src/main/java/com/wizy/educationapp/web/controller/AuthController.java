@@ -12,7 +12,6 @@ import com.wizy.educationapp.web.dto.SignUpResponseDto;
 import com.wizy.educationapp.web.dto.VerificationResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(value = "/v1/auth", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping("/v1/auth")
 public class AuthController {
 
   private final RegistrationFacade registrationFacade;
@@ -47,6 +46,6 @@ public class AuthController {
 
   @PostMapping("/refresh")
   public JwtResponseDto refreshJwtToken(@Valid @RequestBody RefreshTokenRequestDto request) {
-    return refreshTokenService.verifyRefreshToken(request.refreshToken());
+    return refreshTokenService.verify(request.refreshToken());
   }
 }

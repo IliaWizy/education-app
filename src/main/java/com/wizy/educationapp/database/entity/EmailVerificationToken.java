@@ -6,9 +6,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import java.sql.Timestamp;
+import java.util.Date;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Builder
 @Entity
-@Table(name = "email_verification_token")
+@Table(name = "email_verification_tokens")
 public class EmailVerificationToken {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,11 +29,11 @@ public class EmailVerificationToken {
   @Column(name = "token")
   private final String token;
 
-  @ManyToOne
+  @OneToOne
   @JoinColumn(name = "user_id", nullable = false)
   private final User user;
 
   @Column(name = "expiration_time")
-  private final Timestamp expirationTime;
+  private final Date expirationTime;
 
 }

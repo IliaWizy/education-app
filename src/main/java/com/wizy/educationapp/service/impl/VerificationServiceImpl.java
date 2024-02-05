@@ -2,15 +2,13 @@ package com.wizy.educationapp.service.impl;
 
 import com.wizy.educationapp.database.entity.EmailVerificationToken;
 import com.wizy.educationapp.database.entity.User;
-import com.wizy.educationapp.database.repository.EmailVerificationTokenRepository;
-import com.wizy.educationapp.database.repository.UserRepository;
+import com.wizy.educationapp.service.EmailVerificationTokenService;
+import com.wizy.educationapp.service.UserService;
 import com.wizy.educationapp.service.VerificationService;
-import com.wizy.educationapp.service.exception.EmailTokenNotFoundException;
 import com.wizy.educationapp.service.exception.TokenExpirationTimeException;
 import com.wizy.educationapp.web.dto.VerificationResponse;
 import com.wizy.educationapp.web.mapper.VerificationMapper;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
+import java.util.Date;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -20,28 +18,27 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class VerificationServiceImpl implements VerificationService {
 
-  private final EmailVerificationTokenRepository emailVerificationTokenRepository;
-  private final UserRepository userRepository;
+  private final EmailVerificationTokenService emailVerificationTokenService;
+  private final UserService userService;
 
   private final VerificationMapper verificationMapper;
 
   @Override
   public VerificationResponse verification(String token) {
     EmailVerificationToken verificationToken =
-        emailVerificationTokenRepository.findByToken(token).orElseThrow(
-            () -> new EmailTokenNotFoundException("Token not found"));
+        emailVerificationTokenService.findByToken(token);
 
-    if (verificationToken.getExpirationTime().after(Timestamp.valueOf(LocalDateTime.now()))) {
+    if (verificationToken.getExpirationTime().after(new Date())) {
       User savedUser = verificationToken.getUser();
       savedUser.setActive(true);
 
 
-      userRepository.save(savedUser);
+      userService.save(savedUser);
 
-      emailVerificationTokenRepository.delete(verificationToken);
+      emailVerificationTokenService.delete(verificationToken);
       return verificationMapper.toDto(savedUser, "Вы подтвердили почту. Войдите в аккаунт");
     } else {
-      userRepository.delete(verificationToken.getUser());
+      userService.delete(verificationToken.getUser());
       throw new TokenExpirationTimeException("Expiration time has expired. Try register again.");
     }
   }

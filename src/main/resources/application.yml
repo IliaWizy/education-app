@@ -5,6 +5,12 @@ spring:
     enabled: true
     mode: HTML
 
+  security:
+    jwt:
+      secret-key: ${JWT_SECRET}
+      expiration-time: ${JWT_ACCESS_DURATION}
+      refresh-token-expiration-time: ${JWT_REFRESH_DURATION}
+
   mail:
     host: smtp.gmail.com
     port: 587
@@ -19,12 +25,9 @@ spring:
 
   application:
     base-url: http://localhost:8080/v1
-    jwt-secret: ${JWT_SECRET}
     expiration:
       token:
         verification-email: ${HOUR_EXPIRATION_TOKEN_EMAIL}
-        jwt-token: ${HOUR_EXPIRATION_TOKEN_JWT}
-        jwt-token-refresh: ${HOUR_EXPIRATION_REFRESH_TOKEN_JWT}
 
   datasource:
     url: jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}

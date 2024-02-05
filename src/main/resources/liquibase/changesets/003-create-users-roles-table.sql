@@ -1,5 +1,5 @@
 -- liquibase formatted sql
--- add users table
+-- add users_roles table
 
 -- changeset sursindmitry:3
 CREATE TABLE IF NOT EXISTS users_roles

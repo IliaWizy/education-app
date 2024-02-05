@@ -4,8 +4,8 @@ import com.wizy.educationapp.database.entity.RefreshToken;
 import com.wizy.educationapp.web.dto.JwtResponseDto;
 
 public interface RefreshTokenService {
-  RefreshToken createRefreshToken(String email);
+  RefreshToken create(String email);
 
-  JwtResponseDto verifyRefreshToken(String refreshToken);
+  JwtResponseDto verify(String refreshToken);
 
 }
