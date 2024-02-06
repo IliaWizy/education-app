@@ -1,6 +1,6 @@
 package com.wizy.educationapp.service.impl;
 
-import com.wizy.educationapp.config.security.jwt.UserAuthProvider;
+import com.wizy.educationapp.config.security.jwt.service.JwtService;
 import com.wizy.educationapp.database.entity.RefreshToken;
 import com.wizy.educationapp.database.entity.User;
 import com.wizy.educationapp.service.LoginService;
@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class LoginServiceImpl implements LoginService {
 
   private final UserService userService;
-  private final UserAuthProvider userAuthProvider;
+  private final JwtService jwtService;
   private final RefreshTokenService refreshTokenService;
 
   private final PasswordEncoder passwordEncoder;
@@ -32,7 +32,7 @@ public class LoginServiceImpl implements LoginService {
     checkUserActivation(user);
 
     if (passwordEncoder.matches(request.password(), user.getPassword())) {
-      String token = userAuthProvider.generateToken(user);
+      String token = jwtService.generate(user);
 
       RefreshToken refreshToken = refreshTokenService.create(request.email());
 

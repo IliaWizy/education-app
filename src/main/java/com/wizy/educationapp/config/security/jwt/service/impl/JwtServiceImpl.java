@@ -1,6 +1,6 @@
-package com.wizy.educationapp.config.security.jwt;
+package com.wizy.educationapp.config.security.jwt.service.impl;
 
-import com.wizy.educationapp.config.security.jwt.service.CustomUserDetailService;
+import com.wizy.educationapp.config.security.jwt.service.JwtService;
 import com.wizy.educationapp.database.entity.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtParser;
@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class UserAuthProvider {
+public class JwtServiceImpl implements JwtService {
 
   @Value("${spring.security.jwt.secret-key}")
   private String jwtSecret;
@@ -30,7 +30,7 @@ public class UserAuthProvider {
 
   private final CustomUserDetailService customUserDetailService;
 
-  public Authentication validateToken(String token) {
+  public Authentication validate(String token) {
     String username = getClaimFromToken(token, Claims::getSubject);
 
     UserDetails user = customUserDetailService.loadUserByUsername(username);
@@ -52,7 +52,7 @@ public class UserAuthProvider {
     return Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8));
   }
 
-  public String generateToken(User user) {
+  public String generate(User user) {
 
     return Jwts.builder()
         .signWith(generateSecretKey())

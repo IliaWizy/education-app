@@ -13,6 +13,6 @@ public record SignUpRequestDto(
     String name,
 
     @NotBlank(message = "password must NOT be null or empty")
-    @Size(min = 6, max = 20, message = "password length must be between 6 and 20 characters")
+    @Size(min = 6, message = "password length must be minimum 6 characters")
     String password) {
 }

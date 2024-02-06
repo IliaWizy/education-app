@@ -47,6 +47,15 @@ public class User implements UserDetails {
   @Column(name = "password")
   private String password;
 
+  @Column(name = "account_expired")
+  private boolean accountExpired;
+
+  @Column(name = "account_locked")
+  private boolean accountLocked;
+
+  @Column(name = "credential_expired")
+  private boolean credentialExpired;
+
   @Column(name = "active")
   private boolean active;
 
@@ -76,17 +85,17 @@ public class User implements UserDetails {
 
   @Override
   public boolean isAccountNonExpired() {
-    return true;
+    return this.accountExpired;
   }
 
   @Override
   public boolean isAccountNonLocked() {
-    return true;
+    return this.accountLocked;
   }
 
   @Override
   public boolean isCredentialsNonExpired() {
-    return true;
+    return this.credentialExpired;
   }
 
   @Override

@@ -27,6 +27,9 @@ public class RegistrationServiceImpl implements RegistrationService {
 
     User user = userMapper.toEntity(requestDto);
     user.setPassword(passwordEncoder.encode(requestDto.password()));
+    user.setAccountExpired(true);
+    user.setAccountLocked(true);
+    user.setCredentialExpired(true);
     user.setActive(false);
     user.setRoles(Collections.singleton(Role.ROLE_USER));
 

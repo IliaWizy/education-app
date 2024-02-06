@@ -1,6 +1,6 @@
 package com.wizy.educationapp.service.impl;
 
-import com.wizy.educationapp.config.security.jwt.UserAuthProvider;
+import com.wizy.educationapp.config.security.jwt.service.JwtService;
 import com.wizy.educationapp.database.entity.RefreshToken;
 import com.wizy.educationapp.database.entity.User;
 import com.wizy.educationapp.database.repository.RefreshTokenRepository;
@@ -25,17 +25,13 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
 
   private final UserService userService;
   private final RefreshTokenRepository refreshTokenRepository;
-  private final UserAuthProvider userAuthProvider;
+  private final JwtService jwtService;
 
   @Override
   public RefreshToken create(String username) {
 
     User user = userService.getByEmail(username);
 
-    return createOrUpdateRefreshToken(user);
-  }
-
-  private RefreshToken createOrUpdateRefreshToken(User user) {
     RefreshToken refreshToken = user.getRefreshToken();
 
     if (refreshToken == null) {
@@ -46,16 +42,14 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
           new Date(System.currentTimeMillis() + jwtTokenRefresh.toMillis()));
     }
 
-    user.setRefreshToken(refreshToken);
-
-
     return refreshTokenRepository.save(refreshToken);
   }
 
   @Override
   public JwtResponseDto verify(String tokenRequest) {
     RefreshToken refreshToken = refreshTokenRepository.findByRefreshToken(tokenRequest)
-        .orElseThrow(() -> new TokenNotFoundException("Token does not exist"));
+        .orElseThrow(() -> new TokenNotFoundException("Token does not exist",
+            new Throwable("Refresh token not found")));
 
     checkTokenExpiration(refreshToken);
 
@@ -65,7 +59,7 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
     );
 
     User user = refreshToken.getUser();
-    String token = userAuthProvider.generateToken(user);
+    String token = jwtService.generate(user);
 
     refreshTokenRepository.save(refreshToken);
 

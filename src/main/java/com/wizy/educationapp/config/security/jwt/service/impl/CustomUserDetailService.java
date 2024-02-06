@@ -1,4 +1,4 @@
-package com.wizy.educationapp.config.security.jwt.service;
+package com.wizy.educationapp.config.security.jwt.service.impl;
 
 import com.wizy.educationapp.service.UserService;
 import lombok.RequiredArgsConstructor;

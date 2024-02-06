@@ -17,6 +17,9 @@ public interface UserMapper {
   @Mapping(target = "roles", ignore = true)
   @Mapping(target = "emailVerificationToken", ignore = true)
   @Mapping(target = "refreshToken", ignore = true)
+  @Mapping(target = "accountExpired", ignore = true)
+  @Mapping(target = "accountLocked", ignore = true)
+  @Mapping(target = "credentialExpired", ignore = true)
   User toEntity(SignUpRequestDto dto);
 
   @Mapping(source = "entity.email", target = "email")
