@@ -4,8 +4,9 @@ import com.wizy.educationapp.database.entity.EmailVerificationToken;
 import com.wizy.educationapp.database.entity.User;
 import com.wizy.educationapp.database.repository.EmailVerificationTokenRepository;
 import com.wizy.educationapp.service.EmailVerificationTokenService;
-import java.sql.Timestamp;
-import java.util.Calendar;
+import com.wizy.educationapp.service.exception.EmailTokenNotFoundException;
+import java.time.Duration;
+import java.util.Date;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +18,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class EmailVerificationTokenServiceImpl implements EmailVerificationTokenService {
   @Value("${spring.application.expiration.token.verification-email}")
-  private int expirationTime;
+  private Duration expirationTime;
 
   private final EmailVerificationTokenRepository emailVerificationTokenRepository;
 
@@ -28,13 +29,18 @@ public class EmailVerificationTokenServiceImpl implements EmailVerificationToken
     return emailVerificationTokenRepository.save(EmailVerificationToken.builder()
         .token(token)
         .user(savedUser)
-        .expirationTime(calculateExpiryDate(expirationTime))
+        .expirationTime(new Date(System.currentTimeMillis() + expirationTime.toMillis()))
         .build());
   }
 
-  private Timestamp calculateExpiryDate(int hour) {
-    Calendar calendar = Calendar.getInstance();
-    calendar.add(Calendar.HOUR, hour);
-    return new Timestamp(calendar.getTime().getTime());
+  @Override
+  public EmailVerificationToken findByToken(String token) {
+    return emailVerificationTokenRepository.findByToken(token)
+        .orElseThrow(() -> new EmailTokenNotFoundException("Token not found"));
+  }
+
+  @Override
+  public void delete(EmailVerificationToken verificationToken) {
+    emailVerificationTokenRepository.delete(verificationToken);
   }
 }

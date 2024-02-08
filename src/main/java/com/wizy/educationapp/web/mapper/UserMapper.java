@@ -7,13 +7,19 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
-public interface SignUpMapper {
+public interface UserMapper {
   @Mapping(source = "email", target = "email")
   @Mapping(source = "name", target = "name")
   @Mapping(source = "password", target = "password")
 
   @Mapping(target = "id", ignore = true)
   @Mapping(target = "active", ignore = true)
+  @Mapping(target = "roles", ignore = true)
+  @Mapping(target = "emailVerificationToken", ignore = true)
+  @Mapping(target = "refreshToken", ignore = true)
+  @Mapping(target = "accountExpired", ignore = true)
+  @Mapping(target = "accountLocked", ignore = true)
+  @Mapping(target = "credentialExpired", ignore = true)
   User toEntity(SignUpRequestDto dto);
 
   @Mapping(source = "entity.email", target = "email")

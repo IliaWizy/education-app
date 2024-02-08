@@ -1,7 +1,12 @@
 package com.wizy.educationapp.web.controller;
 
+import com.wizy.educationapp.service.LoginService;
+import com.wizy.educationapp.service.RefreshTokenService;
 import com.wizy.educationapp.service.RegistrationFacade;
 import com.wizy.educationapp.service.VerificationService;
+import com.wizy.educationapp.web.dto.JwtRequestDto;
+import com.wizy.educationapp.web.dto.JwtResponseDto;
+import com.wizy.educationapp.web.dto.RefreshTokenRequestDto;
 import com.wizy.educationapp.web.dto.SignUpRequestDto;
 import com.wizy.educationapp.web.dto.SignUpResponseDto;
 import com.wizy.educationapp.web.dto.VerificationResponse;
@@ -21,6 +26,8 @@ public class AuthController {
 
   private final RegistrationFacade registrationFacade;
   private final VerificationService verificationService;
+  private final LoginService loginService;
+  private final RefreshTokenService refreshTokenService;
 
   @PostMapping("/register")
   public SignUpResponseDto register(@Valid @RequestBody SignUpRequestDto requestDto) {
@@ -32,4 +39,13 @@ public class AuthController {
     return verificationService.verification(token);
   }
 
+  @PostMapping("/login")
+  public JwtResponseDto login(@Valid @RequestBody JwtRequestDto request) {
+    return loginService.login(request);
+  }
+
+  @PostMapping("/refresh")
+  public JwtResponseDto refreshJwtToken(@Valid @RequestBody RefreshTokenRequestDto request) {
+    return refreshTokenService.verify(request.refreshToken());
+  }
 }
