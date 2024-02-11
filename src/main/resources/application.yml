@@ -4,6 +4,11 @@ spring:
   thymeleaf:
     enabled: true
     mode: HTML
+  security:
+    jwt:
+      secret-key: ${JWT_SECRET}
+      expiration-time: ${EXPIRATION_TIME_JWT_TOKEN_MILLISECONDS}
+      refresh-token-expiration-time: ${EXPIRATION_TIME_JWT_REFRESH_TOKEN_MILLISECONDS}
   mail:
     host: smtp.gmail.com
     port: 587
@@ -12,7 +17,7 @@ spring:
     properties:
       mail:
         smtp:
-          auth: true
+          auth: truew
           starttls:
             enable: true
   application:
