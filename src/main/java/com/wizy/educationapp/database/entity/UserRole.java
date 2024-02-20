@@ -1,6 +1,5 @@
 package com.wizy.educationapp.database.entity;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -29,7 +28,6 @@ public class UserRole {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(name = "role")
   private String role;
 
   @ManyToOne(fetch = FetchType.EAGER)

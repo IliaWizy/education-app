@@ -9,7 +9,6 @@ import com.wizy.educationapp.web.dto.RefreshTokenRequestDto;
 import com.wizy.educationapp.web.dto.SignUpRequestDto;
 import com.wizy.educationapp.web.dto.SignUpResponseDto;
 import com.wizy.educationapp.web.dto.VerificationResponse;
-import jakarta.annotation.security.PermitAll;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,7 +28,6 @@ public class AuthController {
   private final AuthService authService;
 
   @PostMapping("/register")
-  @PermitAll
   public SignUpResponseDto register(@Valid @RequestBody SignUpRequestDto requestDto) {
     return registrationFacade.registeredUserAndSendEmail(requestDto);
   }

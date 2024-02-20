@@ -1,6 +1,5 @@
 package com.wizy.educationapp.database.entity;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,13 +24,11 @@ public class RefreshToken {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(name = "refresh_token", unique = true)
   private String refreshToken;
 
   @OneToOne
   @JoinColumn(name = "user_id", nullable = false)
   private User user;
 
-  @Column(name = "expiration_time")
   private Date expirationTime;
 }

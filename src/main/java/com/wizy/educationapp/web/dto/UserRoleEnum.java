@@ -1,4 +1,4 @@
-package com.wizy.educationapp.database.entity;
+package com.wizy.educationapp.web.dto;
 
 public enum UserRoleEnum {
   ROLE_USER,

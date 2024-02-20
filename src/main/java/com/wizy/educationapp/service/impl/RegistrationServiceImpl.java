@@ -7,6 +7,7 @@ import com.wizy.educationapp.database.repository.UserRoleRepository;
 import com.wizy.educationapp.service.RegistrationService;
 import com.wizy.educationapp.service.exception.UserIsExistingException;
 import com.wizy.educationapp.web.dto.SignUpRequestDto;
+import com.wizy.educationapp.web.dto.UserRoleEnum;
 import com.wizy.educationapp.web.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 public class RegistrationServiceImpl implements RegistrationService {
   private final UserRepository userRepository;
-
   private final UserMapper userMapper;
   private final PasswordEncoder passwordEncoder;
   private final UserRoleRepository userRoleRepository;
@@ -40,7 +40,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 
     userRepository.save(savedUser);
 
-    UserRole role = new UserRole(savedUser, "ROLE_USER");
+    UserRole role = new UserRole(savedUser, UserRoleEnum.ROLE_USER.name());
 
     userRoleRepository.save(role);
 

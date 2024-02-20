@@ -7,8 +7,8 @@ spring:
   security:
     jwt:
       secret-key: ${JWT_SECRET}
-      expiration-time: ${EXPIRATION_TIME_JWT_TOKEN_MILLISECONDS}
-      refresh-token-expiration-time: ${EXPIRATION_TIME_JWT_REFRESH_TOKEN_MILLISECONDS}
+      expiration-time: ${EXPIRATION_TIME_JWT_TOKEN_SECONDS}
+      refresh-token-expiration-time: ${EXPIRATION_TIME_JWT_REFRESH_TOKEN_SECONDS}
   mail:
     host: smtp.gmail.com
     port: 587
@@ -17,7 +17,7 @@ spring:
     properties:
       mail:
         smtp:
-          auth: truew
+          auth: true
           starttls:
             enable: true
   application:

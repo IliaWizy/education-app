@@ -25,10 +25,10 @@ public class JwtServiceImpl implements JwtService {
   private String jwtSecret;
 
   @Value("${spring.security.jwt.expiration-time}")
-  private Long jwtExpirationAccess;
+  private Long jwtExpirationAccessTimeInSeconds;
 
   @Value("${spring.security.jwt.refresh-token-expiration-time}")
-  private Long jwtExpirationRefresh;
+  private Long jwtExpirationRefreshTimeInSeconds;
 
   private final RefreshTokenRepository refreshTokenRepository;
 
@@ -36,13 +36,13 @@ public class JwtServiceImpl implements JwtService {
 
   @Override
   public String generateAccessToken(UserDetails userDetails) {
-    return generateToken(userDetails, jwtExpirationAccess);
+    return generateToken(userDetails, (jwtExpirationAccessTimeInSeconds * 1000));
   }
 
   @Override
   @Transactional
   public String generateRefreshToken(UserDetails userDetails) {
-    String refreshToken = generateToken(userDetails, jwtExpirationRefresh);
+    String refreshToken = generateToken(userDetails, (jwtExpirationRefreshTimeInSeconds * 1000));
     saveRefreshToken(userDetails.getUsername(), refreshToken);
     return refreshToken;
   }

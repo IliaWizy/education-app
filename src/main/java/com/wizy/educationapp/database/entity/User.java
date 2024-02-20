@@ -2,7 +2,6 @@ package com.wizy.educationapp.database.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -33,16 +32,12 @@ public class User {
   private Long id;
 
   @EqualsAndHashCode.Include
-  @Column(name = "email")
   private String email;
 
-  @Column(name = "name")
   private String name;
 
-  @Column(name = "password")
   private String password;
 
-  @Column(name = "active")
   private boolean active;
 
   @OneToMany(mappedBy = "user", orphanRemoval = true)
