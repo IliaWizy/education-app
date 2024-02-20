@@ -1,36 +1,41 @@
 package com.wizy.educationapp.database.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import java.sql.Timestamp;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
+@NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@Builder
+@Setter
+@EqualsAndHashCode(exclude = "id")
 @Entity
-@Table(name = "email_verification_token")
-public class EmailVerificationToken {
+@Builder
+@Table(name = "user_roles")
+public class UserRole {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private final Long id;
+  private Long id;
 
-  private final String token;
+  private String role;
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "user_id", nullable = false)
-  private final User user;
+  private User user;
 
-  private final Timestamp expirationTime;
-
+  public UserRole(User user, String role) {
+    this.user = user;
+    this.role = role;
+  }
 }

@@ -5,32 +5,30 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import java.sql.Timestamp;
-import lombok.AccessLevel;
+import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
-@Builder
 @Entity
-@Table(name = "email_verification_token")
-public class EmailVerificationToken {
+@Builder
+@Table(name = "refresh_tokens")
+public class RefreshToken {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private final Long id;
+  private Long id;
 
-  private final String token;
+  private String refreshToken;
 
-  @ManyToOne
+  @OneToOne
   @JoinColumn(name = "user_id", nullable = false)
-  private final User user;
+  private User user;
 
-  private final Timestamp expirationTime;
-
+  private Date expirationTime;
 }

@@ -1,12 +1,15 @@
 package com.wizy.educationapp.database.entity;
 
-import jakarta.persistence.Column;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import lombok.AllArgsConstructor;
@@ -29,19 +32,23 @@ public class User {
   private Long id;
 
   @EqualsAndHashCode.Include
-  @Column(name = "email")
   private String email;
 
-  @Column(name = "name")
   private String name;
 
-  @Column(name = "password")
   private String password;
 
-  @Column(name = "active")
   private boolean active;
 
   @OneToMany(mappedBy = "user", orphanRemoval = true)
   private final Set<EmailVerificationToken> emailVerificationTokens = new LinkedHashSet<>();
+
+  @OneToMany(
+      mappedBy = "user",
+      orphanRemoval = true,
+      cascade = CascadeType.ALL,
+      fetch = FetchType.EAGER)
+  @JsonIgnore
+  private final Set<UserRole> roles = new HashSet<>();
 
 }

@@ -4,16 +4,12 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-public record SignUpRequestDto(
-
+public record AuthRequestDto(
     @Email(message = "invalid email address")
-    @NotBlank(message = "email must NOT be null or empty")
     String email,
 
-    @NotBlank(message = "name must NOT be null or empty")
-    String name,
-
-    @NotBlank(message = "password must NOT be null or empty")
+    @NotBlank
     @Size(min = 6, message = "Password must be at least 6 characters long")
-    String password) {
+    String password
+) {
 }

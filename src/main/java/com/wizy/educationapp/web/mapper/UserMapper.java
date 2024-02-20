@@ -7,7 +7,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
-public interface SignUpMapper {
+public interface UserMapper {
   @Mapping(source = "email", target = "email")
   @Mapping(source = "name", target = "name")
   @Mapping(source = "password", target = "password")
